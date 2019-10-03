@@ -5,8 +5,7 @@ import pyautogui
 import time
 
 # opening Image
-z="C:\\Users\\admin\\Desktop\\New folder\\test.jpg"
-img=Image.open(z)
+img=Image.open("C:\\Users\\admin\\Desktop\\New folder\\test.jpg")
 
 # getting size
 a=img.size
