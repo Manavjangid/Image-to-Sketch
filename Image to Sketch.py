@@ -3,17 +3,18 @@ from PIL import Image
 import numpy
 import pyautogui
 import time
-import sys
 
 # opening Image
-# you can add your image path
-img=Image.open(r"C:\Users\admin\Desktop\New folder\test.jpg")
+z="C:\\Users\\admin\\Desktop\\New folder\\test.jpg"
+img=Image.open(z)
 
 # getting size
 a=img.size
 
 # resizing Image
-img2=img.resize((int(20*(a[0]/a[1])),20),3)
+cs=int(100*(a[0]/a[1]))
+rs=100
+img2=img.resize((cs,rs),3)
 
 # converting to black and white
 img2=img2.convert('L')
@@ -24,28 +25,44 @@ img_array=numpy.array(bw)
 array_attributes=img_array.shape
 
 # working with gui
-pyautogui.PAUSE=0.001
+pyautogui.PAUSE=0.0001
 screenWidth, screenHeight = pyautogui.size()
 pyautogui.moveTo(520,740)
 pyautogui.click()
 time.sleep(3)
-pyautogui.moveTo(330,60)
+pyautogui.moveTo(350,65)
 pyautogui.click()
-r=160
-r1=160
+pyautogui.moveTo(20,160)
+
+# image to sketch
+# adding border to image
 c=20
-c1=20
-pyautogui.moveTo(c,r)
+r=160
+while c<=cs+20:
+    pyautogui.click()
+    c+=1
+    pyautogui.moveTo(c,r)
+while r<=rs+160:
+    pyautogui.click()
+    r+=1
+    pyautogui.moveTo(c,r)
+while c>=20:
+    pyautogui.click()
+    c-=1
+    pyautogui.moveTo(c,r)
+while r>=160:
+    pyautogui.click()
+    r-=1
+    pyautogui.moveTo(c,r)
 
-
-# sketching the Image
+    
+# sketching the image
+f_rc=[]
 for i in range(array_attributes[0]):
-    c1=c
     for j in range(array_attributes[1]):
         if (img_array[i][j]==False):
-            pyautogui.click()
-        c1+=1
-        pyautogui.moveTo(c1,r1)
-    r1+=1
-    pyautogui.moveTo(c,r1)
+            f_rc.append([j,i])
+for i in f_rc:
+    pyautogui.moveTo(20+i[0],160+i[1])
+    pyautogui.click()
 bw.show()
